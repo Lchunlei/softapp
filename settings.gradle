@@ -1,0 +1,6 @@
+rootProject.name = 'softapp'
+include 'dao'
+include 'common'
+include 'api'
+include 'cms'
+

@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'com.chun.lei'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //处理表情字符串等
+    compile group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
+    compile("org.apache.httpcomponents:httpclient:4.5.11")
+    compile('com.alibaba:fastjson:1.2.47')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
