@@ -42,5 +42,12 @@ public class MvMovieController {
         return resp;
     }
 
-
+    @RequestMapping(value = "/err",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value="看视频异常上报", notes="看视频异常上报")
+    public ApiResp saveErr(@RequestBody HtmlReq htmlReq){
+        ApiResp resp = new ApiResp();
+        log.info("看视频异常上报--"+ htmlReq.getToken());
+        mvMovieService.saveErr(htmlReq.getToken(),resp);
+        return resp;
+    }
 }

@@ -50,4 +50,11 @@ public class MvMovieServiceImpl implements MvMovieService {
         }
     }
 
+    @Override
+    public void saveErr(String token, ApiResp resp) {
+        String[] ss = token.split("!");
+        Integer resId = Integer.parseInt(ss[1]);
+        mvMovieMapper.saveErr(resId,Integer.parseInt(ss[2]));
+    }
+
 }

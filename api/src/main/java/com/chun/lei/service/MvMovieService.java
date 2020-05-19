@@ -11,4 +11,6 @@ public interface MvMovieService {
 
     public void getH5Mv(String token,ApiResp resp);
 
+    public void saveErr(String token,ApiResp resp);
+
 }

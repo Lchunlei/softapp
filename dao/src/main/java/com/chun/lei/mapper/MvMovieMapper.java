@@ -3,6 +3,7 @@ package com.chun.lei.mapper;
 import com.chun.lei.entity.MvMovie;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,5 +14,8 @@ public interface MvMovieMapper {
 
     @Select("SELECT * FROM mv_movie WHERE resId=#{resId} AND sortIndex=#{sortIndex}")
     MvMovie getAppointMv(@Param("resId")Integer resId, @Param("sortIndex")Integer sortIndex);
+
+    @Update("UPDATE mv_movie SET err='0',uTime=NOW() WHERE resId=#{resId} AND sortIndex=#{sortIndex}")
+    int saveErr(@Param("resId")Integer resId, @Param("sortIndex")Integer sortIndex);
 
 }
