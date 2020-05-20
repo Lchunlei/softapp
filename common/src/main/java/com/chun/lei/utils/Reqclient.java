@@ -33,8 +33,13 @@ import java.util.Map;
  */
 public class Reqclient {
 
-    public static String getWxOpenId(String code){
-        String reqUrl = WxConfig.WX_OPENID_URL.replace("CODE",code);
+    public static String getWxOpenId(String code,String type){
+        String reqUrl;
+        if("xb".equals(type)){
+            reqUrl = WxConfig.XB_WX_OPENID_URL.replace("CODE",code);
+        }else {
+            reqUrl = WxConfig.WX_OPENID_URL.replace("CODE",code);
+        }
         return getReq(reqUrl);
     }
 

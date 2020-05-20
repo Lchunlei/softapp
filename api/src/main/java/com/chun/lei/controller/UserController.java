@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "user",tags = "用户操作")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    @Value("${admin.name.type}")
+    private String userType;
     @Autowired
     private UserInfoService userInfoService;
 
@@ -29,12 +32,12 @@ public class UserController {
     @ApiOperation(value="微信快捷登录", notes="微信快捷登录")
     public ApiResp rapidLogin(@RequestParam String code){
         ApiResp<String> resp = new ApiResp();
-        log.info("\n-----微信快捷登录---->"+code);
+        log.info("\n-----微信快捷登录---->"+code+"--"+userType);
         if(StringTool.isBlank(code)){
             resp.respErr(MsgConstant.PARAMS_NULL_ERR);
         }else {
             //获取微信的openid
-            String respJson = Reqclient.getWxOpenId(code);
+            String respJson = Reqclient.getWxOpenId(code,userType);
             if(StringTool.isBlank(respJson)){
                 resp.respErr(MsgConstant.SYS_ERR);
             }else {
