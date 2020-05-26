@@ -50,4 +50,16 @@ public class MvMovieController {
         mvMovieService.saveErr(htmlReq.getToken(),resp);
         return resp;
     }
+
+    @RequestMapping(value = "/findErr",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value="检查资源链接", notes="检查资源链接")
+    public ApiResp findErr(){
+        ApiResp resp = new ApiResp();
+        log.info("\n检查资源链接.........");
+        mvMovieService.findErr();
+        log.info("\n检查资源链接.........END.......");
+        return resp;
+    }
+
+
 }

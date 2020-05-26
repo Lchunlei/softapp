@@ -7,16 +7,21 @@ import com.chun.lei.mapper.UserResourceMapper;
 import com.chun.lei.model.ApiResp;
 import com.chun.lei.service.MvMovieService;
 import com.chun.lei.sysconfig.MsgConstant;
+import com.chun.lei.utils.Reqclient;
 import com.chun.lei.utils.TokenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Created by lcl on 2020/5/3 0003
  */
 @Service
 public class MvMovieServiceImpl implements MvMovieService {
-
+    private static final Logger log = LoggerFactory.getLogger(MvMovieServiceImpl.class);
     @Autowired
     private MvMovieMapper mvMovieMapper;
     @Autowired
@@ -55,6 +60,20 @@ public class MvMovieServiceImpl implements MvMovieService {
         String[] ss = token.split("!");
         Integer resId = Integer.parseInt(ss[1]);
         mvMovieMapper.saveErr(resId,Integer.parseInt(ss[2]));
+    }
+
+    @Override
+    public void findErr() {
+        List<MvMovie> mvs = mvMovieMapper.getAllMvs();
+        for(MvMovie v:mvs){
+            Boolean re = Reqclient.testUrl(v.getvUrl());
+            if(re){
+                log.info("\n正常-->"+v.getvTitle());
+            }else {
+                mvMovieMapper.saveErrById(v.getId());
+                log.info("\n异常-->"+v.getId()+"--"+v.getvTitle());
+            }
+        }
     }
 
 }

@@ -13,4 +13,6 @@ public interface MvMovieService {
 
     public void saveErr(String token,ApiResp resp);
 
+    public void findErr();
+
 }

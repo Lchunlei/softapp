@@ -8,6 +8,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -270,4 +271,37 @@ public class Reqclient {
         }
         return true;
     }
+
+    /**
+     * 发送GET请求参数直接拼接
+     */
+    public static Boolean testUrl(String url){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet get = new HttpGet(url);
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(10000).setConnectionRequestTimeout(8000)
+                .setSocketTimeout(10000).build();
+        get.setConfig(requestConfig);
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(get);
+            if(response != null && response.getStatusLine().getStatusCode() == 200) {
+                return true;
+            }else {
+                return false;
+            }
+        } catch (IOException e) {
+            return false;
+        }finally {
+            try {
+                httpClient.close();
+                if(response != null) {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

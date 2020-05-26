@@ -95,6 +95,10 @@ public class ResourceServiceImpl implements ResourceService {
         SysResource sr = sysResourceMapper.getById(resId);
         if(sr==null){
             resp.respErr(MsgConstant.FIND_DATA_NULL);
+        }else if(sr.getBuyCoin().equals(0)){
+            sr.setHaveAuth(1);
+            sr.setSeedPre(PRE_SEED);
+            resp.setRespData(sr);
         }else {
             UserResource ur = userResourceMapper.getByUidRsId(uid+"_"+sr.getId());
             if(ur==null){
