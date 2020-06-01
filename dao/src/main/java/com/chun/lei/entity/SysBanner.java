@@ -11,7 +11,34 @@ public class SysBanner {
     private Integer lookState;
     private Integer sortIndex;
     private String imgUrl;
+    private String adUrl;
+    private String adTitle;
+    private Integer adRead;
     private Date cTime;
+
+    public Integer getAdRead() {
+        return adRead;
+    }
+
+    public void setAdRead(Integer adRead) {
+        this.adRead = adRead;
+    }
+
+    public String getAdUrl() {
+        return adUrl;
+    }
+
+    public void setAdUrl(String adUrl) {
+        this.adUrl = adUrl;
+    }
+
+    public String getAdTitle() {
+        return adTitle;
+    }
+
+    public void setAdTitle(String adTitle) {
+        this.adTitle = adTitle;
+    }
 
     public Integer getSortIndex() {
         return sortIndex;
