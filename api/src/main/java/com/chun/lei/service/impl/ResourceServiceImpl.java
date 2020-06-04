@@ -23,7 +23,6 @@ import java.util.List;
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
-    private static final String PRE_SEED="https://xiai.51yuxian.com/img/look.html?";
     @Autowired
     private SysChannelMapper sysChannelMapper;
     @Autowired
@@ -97,7 +96,7 @@ public class ResourceServiceImpl implements ResourceService {
             resp.respErr(MsgConstant.FIND_DATA_NULL);
         }else if(sr.getBuyCoin().equals(0)){
             sr.setHaveAuth(1);
-            sr.setSeedPre(PRE_SEED);
+            sr.setSeedPre();
             resp.setRespData(sr);
         }else {
             UserResource ur = userResourceMapper.getByUidRsId(uid+"_"+sr.getId());
@@ -105,7 +104,7 @@ public class ResourceServiceImpl implements ResourceService {
                 sr.setHaveAuth(0);
             }else {
                 sr.setHaveAuth(1);
-                sr.setSeedPre(PRE_SEED);
+                sr.setSeedPre();
             }
             resp.setRespData(sr);
         }
@@ -132,7 +131,7 @@ public class ResourceServiceImpl implements ResourceService {
                 userResourceMapper.insertOne(ur);
                 userInfoMapper.minusCoin(uid,sr.getBuyCoin());
                 sr.setHaveAuth(1);
-                sr.setSeedPre(PRE_SEED);
+                sr.setSeedPre();
                 resp.setRespData(sr);
             }
         }

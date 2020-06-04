@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * @Created by lcl on 2020/5/3 0003
@@ -34,6 +32,7 @@ public class MvMovieController {
     }
 
     @RequestMapping(value = "/h5",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+//    @CrossOrigin("http://mv.leiyan.icu")
     @ApiOperation(value="h5查看视频源", notes="h5查看视频源")
     public ApiResp getH5Mv(@RequestBody HtmlReq htmlReq){
         ApiResp resp = new ApiResp();
@@ -43,6 +42,7 @@ public class MvMovieController {
     }
 
     @RequestMapping(value = "/err",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+//    @CrossOrigin("http://mv.leiyan.icu")
     @ApiOperation(value="看视频异常上报", notes="看视频异常上报")
     public ApiResp saveErr(@RequestBody HtmlReq htmlReq){
         ApiResp resp = new ApiResp();
@@ -60,6 +60,8 @@ public class MvMovieController {
         log.info("\n检查资源链接.........END.......");
         return resp;
     }
+
+
 
 
 }

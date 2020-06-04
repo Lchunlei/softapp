@@ -17,6 +17,7 @@ public class SysResource {
     private String summary;
     private Integer buyCoin;
     private Integer sortIndex;
+    private Integer aiqing;
     //0禁止1允许
     private Integer lookState;
     //首页0不展示1展示
@@ -27,12 +28,29 @@ public class SysResource {
     private Integer haveAuth;
     private String seedPre;
 
+    private static final String PRE_SEED="https://xiai.51yuxian.com/img/look.html?";
+    private static final String SEE_SEED="https://xiai.51yuxian.com/img/see.html?";
+
     public String getSeedPre() {
         return seedPre;
     }
 
-    public void setSeedPre(String seedPre) {
-        this.seedPre = seedPre;
+    public void setSeedPre() {
+        if(this.aiqing.equals(0)){
+            //原资源地址
+            this.seedPre = this.PRE_SEED;
+        }else {
+            //外链地址
+            this.seedPre = this.SEE_SEED;
+        }
+    }
+
+    public Integer getAiqing() {
+        return aiqing;
+    }
+
+    public void setAiqing(Integer aiqing) {
+        this.aiqing = aiqing;
     }
 
     public Integer getReward() {

@@ -1,8 +1,10 @@
 package com.chun.lei.service.impl;
 
 import com.chun.lei.entity.MvMovie;
+import com.chun.lei.entity.SysResource;
 import com.chun.lei.entity.UserResource;
 import com.chun.lei.mapper.MvMovieMapper;
+import com.chun.lei.mapper.SysResourceMapper;
 import com.chun.lei.mapper.UserResourceMapper;
 import com.chun.lei.model.ApiResp;
 import com.chun.lei.service.MvMovieService;
@@ -26,6 +28,8 @@ public class MvMovieServiceImpl implements MvMovieService {
     private MvMovieMapper mvMovieMapper;
     @Autowired
     private UserResourceMapper userResourceMapper;
+    @Autowired
+    private SysResourceMapper sysResourceMapper;
 
     @Override
     public void getAppointMv(Integer resId, Integer sort, ApiResp resp) {
@@ -45,12 +49,24 @@ public class MvMovieServiceImpl implements MvMovieService {
             resp.respErr(MsgConstant.OUT_TIME);
         }else {
             Integer resId = Integer.parseInt(ss[1]);
-            UserResource ur = userResourceMapper.getByUidRsId(uid+"_"+resId);
-            if(ur==null){
+            SysResource sr = sysResourceMapper.getById(resId);
+            if(sr==null){
                 resp.respErr(MsgConstant.PARAMS_ERR);
             }else {
-                MvMovie mvMovie = mvMovieMapper.getAppointMv(resId,Integer.parseInt(ss[2]));
-                resp.setRespData(mvMovie);
+                if(sr.getBuyCoin().equals(0)){
+                    //免费
+                    MvMovie mvMovie = mvMovieMapper.getAppointMv(resId,Integer.parseInt(ss[2]));
+                    resp.setRespData(mvMovie);
+                }else {
+                    //付积分
+                    UserResource ur = userResourceMapper.getByUidRsId(uid+"_"+resId);
+                    if(ur==null){
+                        resp.respErr(MsgConstant.PARAMS_ERR);
+                    }else {
+                        MvMovie mvMovie = mvMovieMapper.getAppointMv(resId,Integer.parseInt(ss[2]));
+                        resp.setRespData(mvMovie);
+                    }
+                }
             }
         }
     }
