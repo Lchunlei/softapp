@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void appIndexTime(ApiResp resp) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String today = DateTools.getIsSortDate(new Date(),true);
         Holiday holiday = holidayMapper.getDay(today);
         List<SysChannel> channels;
@@ -58,7 +60,7 @@ public class ResourceServiceImpl implements ResourceService {
                 List<SysResource> srs = sysResourceMapper.getIndexResource(sc.getId());
                 sc.setResources(srs);
             }
-            banners = sysBannerMapper.getAllByType(1);
+            banners = sysBannerMapper.getAllByType(1,format.format(new Date()));
         }else {
             //节假日
             channels = sysChannelMapper.getAll();
@@ -66,7 +68,7 @@ public class ResourceServiceImpl implements ResourceService {
                 List<SysResource> srs = sysResourceMapper.getIndexResource(sc.getId());
                 sc.setResources(srs);
             }
-            banners = sysBannerMapper.getAllByType(1);
+            banners = sysBannerMapper.getAllByType(1,format.format(new Date()));
         }
         appIndex.setChannels(channels);
         appIndex.setBanners(banners);
@@ -75,13 +77,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void appIndex(ApiResp resp) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //全部
         List<SysChannel>channels = sysChannelMapper.getAll();
         for(SysChannel sc:channels){
             List<SysResource> srs = sysResourceMapper.getIndexResource(sc.getId());
             sc.setResources(srs);
         }
-        List<SysBanner> banners = sysBannerMapper.getAllByType(1);
+        List<SysBanner> banners = sysBannerMapper.getAllByType(1,format.format(new Date()));
         AppIndex appIndex = new AppIndex();
         appIndex.setChannels(channels);
         appIndex.setBanners(banners);
